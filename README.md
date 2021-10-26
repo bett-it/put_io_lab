@@ -2,3 +2,4 @@
 # Beata Wiśniewska
 #26.10.21
 # Dzisiaj uczymy sie cierpliwosci..
+# nananan
