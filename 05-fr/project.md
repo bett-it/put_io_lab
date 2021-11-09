@@ -43,17 +43,32 @@ Osoba oferująca towar na aukcji.
 
 Osoba chcąca zakupić produkt na aukcji.
 
+<a id="ac3"></a>
+### AC3: System płatności
+
+Wybrany system płatności. 
+
+
+
 
 ## Przypadki użycia poziomu użytkownika
 
 ### Aktorzy i ich cele
 
 [Sprzedający](#ac1):
+
 * [UC1](#uc1): Wystawienie produktu na aukcję
-* ...
+* [UC2](#uc2): Wysłanie produktu z aukcji
+  [UC3](#uc3): Przekazanie produktu [Kupującemu]
 
 [Kupujący](#ac2)
-* ...
+
+* [UC4](#uc4):Zalicytowanie produktu
+  [UC5](#uc5):Wygranie aukcji
+  [UC6](#uc6):Przegranie aukcji
+  [UC7](#uc7):Przekazanie należności sprzedającemu
+
+[System płatności](#ac3)
 
 ---
 <a id="uc1"></a>
@@ -76,10 +91,82 @@ Osoba chcąca zakupić produkt na aukcji.
 
 ---
 
-<a id="uc2"></a>
-### UC2: ...
+<a id="uc4"></a>
+### UC4: Zalicytowanie produktu
 
-**Aktorzy:** [Sprzedający](#ac1), [Kupujący](#ac2), ...
+**Aktorzy:** [Kupujacy](#ac2)
+
+**Scenariusz główny:**
+
+1. [Kupujący](#ac2) loguje się do systemu, w którym będzie mógł licytować produkt poprzez podanie swojego imienia i nazwiska. 
+2. [Kupujący](#ac2) wybiera przycisk zalicytowania produktu.
+3. System prosi o podanie kwoty.
+4. [Kupujący](#ac2) podaje kwotę za którą licytuje. 
+5. System zatwierdza poprawność danych [br1].
+6. System informuje o pomyślnym zalicytowaniu produktu.
+
+**Scenariusze alternatywne:** 
+
+5.A. Podano za niską kwotę do licytowania.
+* 5.A.1. System informuje o błędnie podanych danych.
+* 5.A.2. Przejdź do kroku 3.
+
+---
+
+<a id="uc5"></a>
+### UC5: Wygranie aukcji
+
+**Aktorzy:** 
+
+**Scenariusz główny:**
+1. System blokuje możliwość dalszego licytowania produktu.
+2. System weryfikuje, który [Kupujący] podał najwyższą kwotę licytacji [br2]. 
+3. System przesyła powiadomienie na maila wygrywającego [Kupujacy] o wygraniu licytacji wraz z informacją o ID wygranej licytacji. 
+
+
+**Scenariusze alternatywne:** 
+
+2.A. Brak zalicytowania produktu przez żadnego [Kupujący].  
+* 2.A.1. System informuje [Sprzedający] o braku licytującego wygrywającego aukcje.
+
+---
+
+<a id="uc7"></a>
+### UC7: Przekazanie należności sprzedającemu
+
+**Aktorzy:** [Kupujacy](#ac2), [Sprzedający](#ac1), [System płatności](#ac3)
+
+**Scenariusz główny:**
+
+1. [Kupujący](#ac2) loguje się do systemu, w którym będzie mógł opłacić wylicytowany produkt. 
+2. [Kupujący](#ac2) wybiera przycisk opłacenia produktu, którego licytację wygrał. 
+2. System prosi o podanie ID wygranej aukcji oraz imię i nazwisko kupującego.
+3. System weryfikuje poprawność danych.
+4. System przekierowuje [Kupujący] do [System płatności].
+5. [Kupujący] loguje się w [System płatności]
+5. [System płatności] weryfikuje poprawność danych.
+6. [Kupujący] zatwierdza płatność produktu.
+7. [System płatności] weryfikuje dane i zatwierdza płatność.
+8. [System płatności] wysyła pomyśle opłacenie zamówienia.  
+
+**Scenariusze alternatywne:** 
+
+6.A. Podano błędne dane logowania do [System płatności]
+* 6.A.1. System informuje o błędnie podanych danych.
+* 6.A.2. Przejdź do kroku 5.
+
+7.A. [System płatności] werfikuje, iż brakuje środków na koncie [Kupujący].
+* 7.A.1. System informuje o braku środków na koncie.
+* 7.A.2. Przejdź do kroku 5.
+
+---
+
+
+
+<a id="uc2"></a>
+### UC2: Wysłanie produktu z aukcji
+
+**Aktorzy:** [Sprzedający](#ac1), [Kupujący](#ac2)
 
 **Scenariusz główny:**
 1. ...
@@ -91,7 +178,7 @@ Osoba chcąca zakupić produkt na aukcji.
 
 ---
 
-## Obiewkty biznesowe (inaczje obiekty dziedzinowe lub informatycjne)
+## Obiewkty biznesowe (inaczej obiekty dziedzinowe lub informatycjne)
 
 ### BO1: Aukcja
 
