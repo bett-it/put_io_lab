@@ -1,0 +1,179 @@
+TESTY JEDNOSTKOWE
+
+___Beata Wiśniewska___
+
+I8.1 145223
+
+----CalculatorTest----
+
+package put.io.testing.junit;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CalculatorTest {
+
+    private Calculator calculator;
+
+    @BeforeEach
+    public void setUp(){
+        calculator = new Calculator();
+    }
+
+    @Test
+    public void test_add (){
+
+        calculator.add(2,3);
+        assertEquals(5, calculator.add(2,3));
+        calculator.add(7,9);
+        assertEquals(16, calculator.add(7,9));
+    }
+
+    @Test
+    public void test_multiply (){
+
+        calculator.multiply(2,3);
+        assertEquals(6, calculator.multiply(2,3));
+        calculator.multiply(7,9);
+        assertEquals(63, calculator.multiply(7,9));
+    }
+
+    @Test
+    public void test_add_positive(){
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+        calculator.addPositiveNumbers(-2,3);
+        assertEquals(6, calculator.addPositiveNumbers(2,3));}, "The arguments must be positive");
+        }
+}
+
+
+
+----FailureOrErrorTest----
+
+package put.io.testing.junit;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class FailureOrErrorTest {
+
+    private Calculator calculator;
+
+    @BeforeEach
+    public void setUp(){
+        calculator = new Calculator();
+    }
+
+    @Test
+    public void test1(){
+        assertEquals(3,2);
+    }
+
+    @Test
+    public void test2(){
+        Exception thrown = assertThrows(Exception.class, () -> {
+            assertEquals(6, 2);}, "The arguments must be equals");
+    }
+
+    @Test
+    public void test3(){
+        try{
+            assertEquals(3,calculator.addPositiveNumbers(-1,0));
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+}
+
+
+
+----AudiobookPriceCalculatorTest----
+
+
+package put.io.testing.audiobooks;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static put.io.testing.audiobooks.Customer.LoyaltyLevel.*;
+
+class AudiobookPriceCalculatorTest {
+
+    @Test
+    public void test1() { //Ścieżka, gdzie Adam jest subskrybentem i loyality = standard
+
+        double new_price = 0.0;
+        Audiobook audiobook = new Audiobook("a", 10);
+        Customer customer = new Customer("Adam", STANDARD, true);
+
+        AudiobookPriceCalculator test1 = new AudiobookPriceCalculator();
+        new_price = test1.calculate(customer, audiobook);
+        assertEquals(0, new_price);
+    }
+    @Test
+    public void test12() { //Ścieżka, gdzie Adam jest subskrybentem i loyality = silver
+
+        double new_price = 0.0;
+        Audiobook audiobook = new Audiobook("a", 10);
+        Customer customer = new Customer("Adam", SILVER, true);
+
+        AudiobookPriceCalculator test1 = new AudiobookPriceCalculator();
+        new_price = test1.calculate(customer, audiobook);
+        assertEquals(0, new_price);
+    }
+
+    @Test
+    public void test13() { //Ścieżka, gdzie Adam jest subskrybentem i loyality = gold
+
+        double new_price = 0.0;
+        Audiobook audiobook = new Audiobook("a", 10);
+        Customer customer = new Customer("Adam", GOLD, true);
+
+        AudiobookPriceCalculator test1 = new AudiobookPriceCalculator();
+        new_price = test1.calculate(customer, audiobook);
+        assertEquals(0, new_price);
+    }
+
+    @Test
+    public void test2() { //Ścieżka, gdzie Adam nie jest subskrybentem, ale ma loyality = silver
+
+        double new_price = 0.0;
+        Audiobook audiobook = new Audiobook("a", 10);
+        Customer customer = new Customer("Adam", SILVER, false);
+
+        AudiobookPriceCalculator test1 = new AudiobookPriceCalculator();
+        new_price = test1.calculate(customer, audiobook);
+        assertEquals(9, new_price);
+    }
+
+    @Test
+    public void test3() { //Ścieżka, gdzie Adam nie jest subskrybentem, ale ma loyality = gold
+
+        double new_price = 0.0;
+        Audiobook audiobook = new Audiobook("a", 10);
+        Customer customer = new Customer("Adam", GOLD, false);
+
+        AudiobookPriceCalculator test1 = new AudiobookPriceCalculator();
+        new_price = test1.calculate(customer, audiobook);
+        assertEquals(8, new_price);
+    }
+
+    @Test
+    public void test4() { //Ścieżka, gdzie Adam nie jest subskrybentem i ma loyality = standard
+
+        double new_price = 0.0;
+        Audiobook audiobook = new Audiobook("a", 10);
+        Customer customer = new Customer("Adam", STANDARD, false);
+
+        AudiobookPriceCalculator test1 = new AudiobookPriceCalculator();
+        new_price = test1.calculate(customer, audiobook);
+        assertEquals(10, new_price);
+    }
+
+}
