@@ -1,0 +1,11 @@
+Summary_report
+
+Zadanie 1
+Przed usprawnieniem średni czas wynosił 5442 milisekund.
+Po usprawnieniu czyli ustawieniu zmiennej avg = averageSpendings() i użyciu jej w pętli (zamiast wyliczać wartość na nowo za każdym razem),
+średni czas jest równy 149.
+
+Zadanie 2
+Po 1 uruchomieniu udało się osiagnąć wynik równy wydrukowi 2 kard na sekundę.
+Po zmianie liczby drukarek na 35, osiagane wyniki są równe 6.1 kartek na sekundę.
+
